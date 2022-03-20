@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="studioview/studioview.css">
+    </head>
+    <body>
+        <h1>try forders</h1>
+        <a href="tests.txt">tests text link</a>
+        <div id="examples-container" class="area" style="width: 480px;">
+            <div id="examples-view"></div>
+            <div id="examples-footer"></div>
+        </div>
+        <script src="studioview/studioview.js"></script>
+        <script>
+            function querySelector(selector) {
+                var el = document.querySelector(selector);
+                if (!el) {
+                    throw new Error('Selector returned nothing: ' + selector);
+                }
+                return el;
+            }
+            var STUDIO = '15926401';
+            var examplesContainer = querySelector('#examples-container');
+            var examplesViewContainer = querySelector('#examples-view');
+            var examplesFooter = querySelector('#examples-footer');
+            examplesContainer.style.height = '0px';
+            var studioView = null;
+            function initStudioView() {
+                studioView = new StudioView(STUDIO);
+                studioView.visible = false;
+                studioView.onselect = function(id, el) {
+                    location.hash = '#' + id;
+                };
+                studioView.loadNextPage();
+                studioView.scrollTop = 0;
+
+                var link = document.createElement('a');
+                link.innerText = 'View studio on Scratch.';
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.href = studioView.getURL();
+                examplesFooter.appendChild(link);
+                examplesViewContainer.appendChild(studioView.root);
+                examplesContainer.style.height = 360 + 'px';
+            }
+            initStudioView()
+        </script>
+    </body>
+</html>
+
